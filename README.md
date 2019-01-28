@@ -13,9 +13,11 @@ Rules:
 ## Usage
 
 ```php
-
 // instantiate new matcher
 $gmailMatcher = new \danjam\GmailMatcher\GmailMatcher();
+
+// you can also specify the domain used when normalizing. Must be one of gmail.com, googlemail.com. Defaults to gmail.com
+$gmailMatcher = new \danjam\GmailMatcher\GmailMatcher('googlemail.com');
 
 // foo@gmail.com
 $gmailMatcher->normalize('F.O.O@gmail.com');
@@ -24,10 +26,9 @@ $gmailMatcher->normalize('F.O.O@gmail.com');
 $gmailMatcher->match('F.O.O@gmail.com', 'foo@gmail.com');
 
 // false
-$gmailMatcher->match('bar@gmail.com', 'bar@gmail.com');
+$gmailMatcher->match('foo@gmail.com', 'bar@gmail.com');
 
 // multiple addresses
 $gmailMatcher->match('bar@gmail.com', 'b.a.r@gmail.com', 'bar@googlemail.com', ...);
-
 
 ```
