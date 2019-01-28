@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
  * Class GmailMatcherTest
  *
  * @package danjam\GmailMatcher\tests
+ *
+ * @SuppressWarnings(TooManyPublicMethods)
  */
 class GmailMatcherTest extends TestCase
 {
@@ -124,7 +126,7 @@ class GmailMatcherTest extends TestCase
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function matchThrowsExceptionDataProvider(): array
     {

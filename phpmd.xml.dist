@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <ruleset>
-    <!--<description>PHPMD rules</description>-->
     <rule ref="rulesets/cleancode.xml">
         <exclude name="StaticAccess"/>
     </rule>
