@@ -1,0 +1,65 @@
+{
+    "name": "danjam/gmail-matcher",
+    "description": "WIP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Danny James",
+            "email": "hello@dannyjames.net"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.1",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "ext-ast": "*",
+        "neronmoon/scriptsdev": "^0.1.4",
+        "php-coveralls/php-coveralls": "^2.1",
+        "phpmd/phpmd": "^2.6",
+        "phpstan/phpstan": "^0.11.0",
+        "phpstan/phpstan-phpunit": "^0.11.0",
+        "phpstan/phpstan-strict-rules": "^0.11.0",
+        "phpunit/phpunit": "^7",
+        "povils/phpmnd": "^2.0",
+        "sebastian/phpcpd": "^4.1",
+        "sensiolabs/security-checker": "^5.0",
+        "squizlabs/php_codesniffer": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "danjam\\GmailMatcher\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "danjam\\GmailMatcher\\tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "scripts-dev": {
+            "validate-composer": "@composer validate --strict",
+            "security-check": "@php vendor/bin/security-checker security:check composer.lock",
+            "tests": "vendor/bin/phpunit",
+            "phpcs": "vendor/bin/phpcs",
+            "phpmnd": "vendor/bin/phpmnd src",
+            "phpmd": "vendor/bin/phpmd src,tests text phpmd.xml.dist --suffixes php",
+            "phpcpd": "vendor/bin/phpcpd --names=*.php --fuzzy src tests",
+            "phpstan": "vendor/bin/phpstan analyse",
+            "qa": [
+                "@validate-composer",
+                "@security-check",
+                "@tests",
+                "@phpcs",
+                "@phpmnd",
+                "@phpmd",
+                "@phpcpd",
+                "@phpstan"
+            ]
+        }
+    }
+}

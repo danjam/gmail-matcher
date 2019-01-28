@@ -1,0 +1,26 @@
+language: php
+
+dist: bionic
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+before_install:
+  - pecl install ast
+
+install:
+  - composer install
+
+script:
+  - composer validate --strict
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml --configuration phpunit.xml.dist
+  - php vendor/bin/security-checker security:check composer.lock
+  - vendor/bin/phpcs
+  - vendor/bin/phpmnd src
+  - vendor/bin/phpmd src,tests text phpmd.xml.dist --suffixes php
+  - vendor/bin/phpcpd --names=*.php --fuzzy src tests
+  - vendor/bin/phpstan analyse
+
+after_success: travis_retry vendor/bin/php-coveralls -v
