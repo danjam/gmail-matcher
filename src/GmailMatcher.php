@@ -20,7 +20,7 @@ class GmailMatcher
     public const ERROR_INVALID_NORMALIZED_DOMAIN = '$normalizedDomain must be one of ';
 
     /** @var string */
-    public const ERROR_INVALID_EMAIL =  ' is not a valid email address';
+    public const ERROR_INVALID_EMAIL =  ' is not a valid address';
 
     /** @var string  */
     public const ERROR_INVALID_EMAILS_COUNT = 'You must provide at last two email addresses to compare';
@@ -42,6 +42,8 @@ class GmailMatcher
      * @param string $normalizedDomain
      *
      * @return void
+     *
+     * @throws InvalidArgumentException
      */
     private function setNormalizedDomain(string $normalizedDomain): void
     {
@@ -66,6 +68,8 @@ class GmailMatcher
      * @param string ...$emails
      *
      * @return void
+     *
+     * @throws InvalidEmailException
      */
     private function validate(string ...$emails): void
     {
@@ -79,7 +83,11 @@ class GmailMatcher
     }
 
     /**
+     * Normalizes an email to lowercase with dots removed, and uses default domain
+     *
      * @param string $email
+     *
+     * @see GmailMatcher::setNormalizedDomain()
      *
      * @return string
      */

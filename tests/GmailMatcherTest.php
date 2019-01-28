@@ -123,11 +123,27 @@ class GmailMatcherTest extends TestCase
         (new GmailMatcher())->match('foo@gmail.com');
     }
 
-    public function testMatchThrowsExceptionOnInvalidEmail(): void
+    /**
+     * @return string[]
+     */
+    public function matchThrowsExceptionDataProvider(): array
+    {
+        return [
+            'Invalid email'     => [['INVALID', 'INVALID']],
+            'non Gmail address' => [['foo@bar.com', 'foo@bar.com']],
+        ];
+    }
+
+    /**
+     * @dataProvider matchThrowsExceptionDataProvider
+     *
+     * @param array $emails
+     */
+    public function testMatchThrowsException(array $emails): void
     {
         self::expectException(InvalidArgumentException::class);
         self::expectExceptionMessage(GmailMatcher::ERROR_INVALID_EMAIL);
 
-        (new Gmailmatcher())->match('INVALID', 'INVALID');
+        (new Gmailmatcher())->match(...$emails);
     }
 }
