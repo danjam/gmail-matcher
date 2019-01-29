@@ -7,11 +7,13 @@ use InvalidArgumentException;
 
 /**
  * Class GmailMatcher
+ *
+ * @todo document class
  */
 class GmailMatcher
 {
     /** @var string[] */
-    private const NORMALIZED_DOMAINS = [
+    private const VALID_NORMALIZED_DOMAINS = [
         'gmail.com',
         'googlemail.com',
     ];
@@ -32,10 +34,12 @@ class GmailMatcher
     public const ERROR_INVALID_EMAILS_EMPTY = 'One or more email addresses are empty';
 
     /** @var string */
-    private $normalizedDomain = self::NORMALIZED_DOMAINS[0];
+    private $normalizedDomain = self::VALID_NORMALIZED_DOMAINS[0];
 
     /**
-     * @param string|null $normalizedDomain
+     * GmailMatcher constructor
+     *
+     * @param string|null $normalizedDomain The domain to use when normalizing emails. Defaults to "gmail.com".
      */
     public function __construct(?string $normalizedDomain = null)
     {
@@ -45,17 +49,19 @@ class GmailMatcher
     }
 
     /**
+     * Sets the normalized domain for use with email normalization.
+     *
      * @param string $normalizedDomain
      *
-     * @return void
+     * @see normalize()
      *
      * @throws InvalidArgumentException
      */
     private function setNormalizedDomain(string $normalizedDomain): void
     {
-        if (!in_array($normalizedDomain, self::NORMALIZED_DOMAINS, true)) {
+        if (!in_array($normalizedDomain, self::VALID_NORMALIZED_DOMAINS, true)) {
             throw new InvalidArgumentException(
-                self::ERROR_INVALID_NORMALIZED_DOMAIN . implode(', ', self::NORMALIZED_DOMAINS)
+                self::ERROR_INVALID_NORMALIZED_DOMAIN . implode(', ', self::VALID_NORMALIZED_DOMAINS)
             );
         }
 
@@ -63,22 +69,33 @@ class GmailMatcher
     }
 
     /**
+     * Generates the regex string used for Gmail address validation
+     *
+     * @see validate()
+     *
      * @return string
      */
     private function normalizedDomainsRegexString(): string
     {
-        return '/@(' . str_replace('.', '\.', implode('|', self::NORMALIZED_DOMAINS)) . ')$/i';
+        return '/@(' . str_replace('.', '\.', implode('|', self::VALID_NORMALIZED_DOMAINS)) . ')$/i';
     }
 
     /**
+     * Naively Validates an email address. Checks for empty address / invalid address / non Gmail address.
+     *
      * @param string ...$emails
      *
      * @return void
      *
      * @throws InvalidEmailException
+     * @throws InvalidArgumentException
      */
     private function validate(string ...$emails): void
     {
+        if (array_filter($emails) !== $emails) {
+            throw new InvalidArgumentException(self::ERROR_INVALID_EMAILS_EMPTY);
+        }
+
         $validatedEmails = filter_var_array($emails, FILTER_VALIDATE_EMAIL);
 
         // invalid email address
@@ -103,7 +120,7 @@ class GmailMatcher
      *
      * @param string $email
      *
-     * @see GmailMatcher::setNormalizedDomain()
+     * @see setNormalizedDomain()
      *
      * @return string
      */
@@ -117,6 +134,8 @@ class GmailMatcher
     }
 
     /**
+     * Checks that all supplied Gmail addresses match each other
+     *
      * @param string ...$emails
      *
      * @return bool
@@ -125,10 +144,6 @@ class GmailMatcher
      */
     public function match(string ...$emails): bool
     {
-        if (array_filter($emails) !== $emails) {
-            throw new InvalidArgumentException(self::ERROR_INVALID_EMAILS_EMPTY);
-        }
-
         if (count($emails) === 1) {
             throw new InvalidArgumentException(self::ERROR_INVALID_EMAILS_COUNT);
         }

@@ -42,13 +42,31 @@ class GmailMatcherTest extends TestCase
     }
 
     /**
-     * @depends testNormalize
+     * @return array
      */
-    public function testInstantiateWithNormalizedDomain(): void
+    public function instantiateWithNormalizedDomainDataProvider(): array
+    {
+        return [
+            'Domain gmail.com'      => ['foo@gmail.com', 'gmail.com', 'foo@googlemail.com'],
+            'Domain googlemail.com' => ['foo@googlemail.com', 'googlemail.com', 'foo@gmail.com'],
+            'None (default)'        => ['foo@gmail.com', null, 'foo@googlemail.com'],
+        ];
+    }
+
+    /**
+     * @dataProvider instantiateWithNormalizedDomainDataProvider
+     *
+     * @depends testNormalize
+     *
+     * @param string      $expected
+     * @param string|null $domain
+     * @param string      $email
+     */
+    public function testInstantiateWithNormalizedDomain(string $expected, ?string $domain, string $email): void
     {
         self::assertSame(
-            'foo@googlemail.com',
-            (new GmailMatcher('googlemail.com'))->normalize('foo@googlemail.com')
+            $expected,
+            (new GmailMatcher($domain))->normalize($email)
         );
     }
 
