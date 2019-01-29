@@ -117,34 +117,29 @@ class GmailMatcherTest extends TestCase
         );
     }
 
-    public function testMatchThrowsExceptionOnSingleEmail(): void
-    {
-        self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage(GmailMatcher::ERROR_INVALID_EMAILS_COUNT);
-
-        (new GmailMatcher())->match('foo@gmail.com');
-    }
-
     /**
      * @return array
      */
     public function matchThrowsExceptionDataProvider(): array
     {
         return [
-            'Invalid email'     => [['INVALID', 'INVALID']],
-            'non Gmail address' => [['foo@bar.com', 'foo@bar.com']],
+            'Single email'      => [['foo@gmail.com'], GmailMatcher::ERROR_INVALID_EMAILS_COUNT],
+            'Empty emails'      => [['', ''], GmailMatcher::ERROR_INVALID_EMAILS_EMPTY],
+            'Invalid email'     => [['INVALID', 'INVALID'], GmailMatcher::ERROR_INVALID_EMAIL],
+            'non Gmail address' => [['foo@bar.com', 'foo@bar.com'], GmailMatcher::ERROR_INVALID_GMAIL],
         ];
     }
 
     /**
      * @dataProvider matchThrowsExceptionDataProvider
      *
-     * @param array $emails
+     * @param array  $emails
+     * @param string $exceptionMessage
      */
-    public function testMatchThrowsException(array $emails): void
+    public function testMatchThrowsException(array $emails, string $exceptionMessage): void
     {
         self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage(GmailMatcher::ERROR_INVALID_EMAIL);
+        self::expectExceptionMessage($exceptionMessage);
 
         (new Gmailmatcher())->match(...$emails);
     }

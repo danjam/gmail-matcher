@@ -20,10 +20,16 @@ class GmailMatcher
     public const ERROR_INVALID_NORMALIZED_DOMAIN = '$normalizedDomain must be one of ';
 
     /** @var string */
-    public const ERROR_INVALID_EMAIL =  ' is not a valid address';
+    public const ERROR_INVALID_EMAIL =  ' is not a valid email address';
+
+    /** @var string */
+    public const ERROR_INVALID_GMAIL =  ' is not a valid Gmail address';
 
     /** @var string  */
     public const ERROR_INVALID_EMAILS_COUNT = 'You must provide at last two email addresses to compare';
+
+    /** @var string */
+    public const ERROR_INVALID_EMAILS_EMPTY = 'One or more email addresses are empty';
 
     /** @var string */
     private $normalizedDomain = self::NORMALIZED_DOMAINS[0];
@@ -73,11 +79,21 @@ class GmailMatcher
      */
     private function validate(string ...$emails): void
     {
+        $validatedEmails = filter_var_array($emails, FILTER_VALIDATE_EMAIL);
+
+        // invalid email address
+        if ($validatedEmails !== $emails) {
+            throw new InvalidEmailException(
+                array_values(array_diff($emails, $validatedEmails))[0] . self::ERROR_INVALID_EMAIL
+            );
+        }
+
         $matches = preg_grep($this->normalizedDomainsRegexString(), $emails);
 
+        // invalid gmail address
         if ($matches !== $emails) {
             throw new InvalidEmailException(
-                array_values(array_diff($emails, $matches))[0] . self::ERROR_INVALID_EMAIL
+                array_values(array_diff($emails, $matches))[0] . self::ERROR_INVALID_GMAIL
             );
         }
     }
@@ -109,6 +125,10 @@ class GmailMatcher
      */
     public function match(string ...$emails): bool
     {
+        if (count(array_filter($emails)) !== count($emails)) {
+            throw new InvalidArgumentException(self::ERROR_INVALID_EMAILS_EMPTY);
+        }
+
         if (count($emails) === 1) {
             throw new InvalidArgumentException(self::ERROR_INVALID_EMAILS_COUNT);
         }
