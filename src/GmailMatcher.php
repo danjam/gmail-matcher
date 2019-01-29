@@ -125,7 +125,7 @@ class GmailMatcher
      */
     public function match(string ...$emails): bool
     {
-        if (count(array_filter($emails)) !== count($emails)) {
+        if (array_filter($emails) !== $emails) {
             throw new InvalidArgumentException(self::ERROR_INVALID_EMAILS_EMPTY);
         }
 
