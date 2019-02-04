@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/danjam/gmail-matcher.svg?branch=master)](https://travis-ci.org/danjam/gmail-matcher) [![Coverage Status](https://coveralls.io/repos/github/danjam/gmail-matcher/badge.svg?branch=master)](https://coveralls.io/github/danjam/gmail-matcher?branch=master)
 
-**TL;DR: This is a PHP class that can normalize and compare different formats of the same Gmail address.**
+**TL;DR: This is a PHP 7.1+ class that can normalize and compare different formats of the same Gmail address.**
 
 Gmail address rules have some caveats:
 
