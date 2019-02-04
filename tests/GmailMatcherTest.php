@@ -87,9 +87,10 @@ class GmailMatcherTest extends TestCase
     public function matchDataProvider(): array
     {
         return [
-            'Valid match'                       => ['foo@gmail.com', 'foo@gmail.com', true],
-            'Valid match with different domain' => ['foo@gmail.com', 'foo@googlemail.com', true],
-            'Should not match'                  => ['foo@gmail.com', 'bar@gmail.com', false],
+            'Valid match'                           => ['foo@gmail.com', 'foo@gmail.com', true],
+            'Valid match with different domain'     => ['foo@gmail.com', 'foo@googlemail.com', true],
+            'Should not match'                      => ['foo@gmail.com', 'bar@gmail.com', false],
+            'Should see plus as different address' => ['foo+bar@gmail.com', 'foo@gmail.com', false],
         ];
     }
 
@@ -125,9 +126,9 @@ class GmailMatcherTest extends TestCase
      * @dataProvider matchHandlesVariadicParametersDataProvider
      *
      * @param array $parameters
-     * @param mixed $expected
+     * @param bool $expected
      */
-    public function testMatchHandlesVariadicParameters(array $parameters, $expected): void
+    public function testMatchHandlesVariadicParameters(array $parameters, bool $expected): void
     {
         self::assertSame(
             $expected,
@@ -159,6 +160,36 @@ class GmailMatcherTest extends TestCase
         self::expectException(InvalidArgumentException::class);
         self::expectExceptionMessage($exceptionMessage);
 
-        (new Gmailmatcher())->match(...$emails);
+        (new GmailMatcher())->match(...$emails);
+    }
+
+    /**
+     * @return array
+     */
+    public function isGmailAddressDataProvider(): array
+    {
+        return [
+            'Valid gmail domain address'        => ['foo@gmail.com', true],
+            'Valid gmail domain uppercase'      => ['FOO@GMAIL.COM', true],
+            'Valid googlemail domain address'   => ['foo@googlemail.com', true],
+            'Valid googlemail domain uppercase' => ['FOO@GOOGLEMAIL.COM', true],
+            'Not a gmail address'               => ['foo@bar.com', false],
+            'Invalid address'                   => ['foobar', false],
+            'Empty email address'               => ['', false],
+        ];
+    }
+
+    /**
+     * @dataProvider isGmailAddressDataProvider
+     *
+     * @param string $email
+     * @param bool   $expected
+     */
+    public function testIsGmailAddress(string $email, bool $expected): void
+    {
+        self::assertSame(
+            $expected,
+            (new GmailMatcher())->isGmailAddress($email)
+        );
     }
 }

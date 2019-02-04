@@ -154,4 +154,15 @@ class GmailMatcher
             array_map([$this, 'normalize'], $emails)
         )) === 1;
     }
+
+    /**
+     * Checks to see if an email address is valid
+     * @param string $email
+     *
+     * @return bool
+     */
+    public function isGmailAddress(string $email): bool
+    {
+        return (bool) preg_match($this->normalizedDomainsRegexString(), $email);
+    }
 }
