@@ -2,13 +2,20 @@
 
 [![Build Status](https://travis-ci.org/danjam/gmail-matcher.svg?branch=master)](https://travis-ci.org/danjam/gmail-matcher) [![Coverage Status](https://coveralls.io/repos/github/danjam/gmail-matcher/badge.svg?branch=master)](https://coveralls.io/github/danjam/gmail-matcher?branch=master)
 
-WIP matcher for Gmail addresses. Real docs coming soon
+**TL;DR: This is a PHP class that can normalize and compare different formats of the same Gmail address.**
 
-Rules:
+Gmail address rules have some caveats:
+
  * Dots in email addresses are disregarded (`foobar@gmail.com` is the same as `foo.bar@gmail.com`). ([Source](https://support.google.com/mail/answer/7436150))
  * Addresses are case insensitive (`FOOBAR@gmail.com` is the same as `foobar@gmail.com`)
  * The `gmail.com` domain is interchangeable with `googlemail.com` (`foobar@gmail.com` is the same as `foobar@googlemail.com`) ([Source](https://support.google.com/mail/answer/10313))
  * Pluses are allowed in emails (`foobar+baz@gmail.com`)
+ 
+Because of this it is very possible for a system to have multiple variations of the same Gmail address associated with different users.
+
+This class attempts to address this by providing a `match(…)` method to check variations against each other and a `normalize(…)` method to retrieve a normalized version of the address. Also exposed is a method for determining if an address is a Gamil address, `isGmailAddress(…)`.
+
+Between these three methods it should be possible to check, normalize and store Gmail addresses to prevent duplicate signups within a system.
 
 ## Usage
 
@@ -19,14 +26,17 @@ $gmailMatcher = new \danjam\GmailMatcher\GmailMatcher();
 // you can also specify the domain used when normalizing. Must be one of gmail.com, googlemail.com. Defaults to gmail.com
 $gmailMatcher = new \danjam\GmailMatcher\GmailMatcher('googlemail.com');
 
-// foo@gmail.com
+// normalizes the address - returns foo@gmail.com
 $gmailMatcher->normalize('F.O.O@gmail.com');
 
-// true
+// returns true
 $gmailMatcher->match('F.O.O@gmail.com', 'foo@gmail.com');
 
-// false
+// returns false
 $gmailMatcher->match('foo@gmail.com', 'bar@gmail.com');
+
+// returns false - addresses with + should NOT be treated as the same address
+$mailMatcher->match('foo@gmail', 'foo+bar@gmail.com');
 
 // multiple addresses
 $gmailMatcher->match('bar@gmail.com', 'b.a.r@gmail.com', 'bar@googlemail.com', ...);
