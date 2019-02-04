@@ -156,7 +156,8 @@ class GmailMatcher
     }
 
     /**
-     * Checks to see if an email address is valid
+     * Checks to see if an email address is a Gmail address
+     *
      * @param string $email
      *
      * @return bool
