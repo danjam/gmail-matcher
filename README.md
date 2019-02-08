@@ -17,6 +17,14 @@ This class attempts to address this by providing a `match(…)` method to check 
 
 Between these three methods it should be possible to check, normalize and store Gmail addresses, for example to prevent duplicate signups within a system.
 
+## Install
+
+Via [Composer](https://getcomposer.org/)
+
+```
+$ composer require danjam/gmail-matcher
+```
+
 ## Usage
 
 ```php
