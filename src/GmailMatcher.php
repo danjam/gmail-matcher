@@ -8,7 +8,12 @@ use InvalidArgumentException;
 /**
  * Class GmailMatcher
  *
- * @todo document class
+ * A class to match Gmail addresses across the many accepted formats.
+ *
+ * - Dots in email addresses are disregarded (foobar@gmail.com is the same as foo.bar@gmail.com)
+ * - Addresses are case insensitive (FOOBAR@gmail.com is the same as foobar@gmail.com)
+ * - The gmail.com domain is interchangeable with googlemail.com (foobar@gmail.com is the same as foobar@googlemail.com)
+ * - Pluses are allowed in emails (foobar+baz@gmail.com)
  */
 class GmailMatcher
 {

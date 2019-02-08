@@ -1,20 +1,22 @@
 {
     "name": "danjam/gmail-matcher",
-    "description": "WIP",
     "type": "library",
+    "description": "Library to check and match the varying formats of Gmail addresses",
+    "keywords": ["gmail"],
+    "homepage": "https://github.com/danjam/gmail-matcher",
     "license": "MIT",
     "authors": [
         {
             "name": "Danny James",
-            "email": "hello@dannyjames.net"
+            "email": "hello@dannyjames.net",
+            "homepage": "http://dannyjames.net"
         }
     ],
     "config": {
         "sort-packages": true
     },
     "require": {
-        "php": "^7.1",
-        "ext-json": "*"
+        "php": "^7.1"
     },
     "require-dev": {
         "ext-ast": "*",
@@ -32,7 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "danjam\\GmailMatcher\\": "src"
+            "danjam\\GmailMatcher\\": "src/"
         }
     },
     "autoload-dev": {
