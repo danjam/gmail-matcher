@@ -1,26 +1,23 @@
 language: php
-
 dist: bionic
-
 php:
-  - 7.1
-  - 7.2
-  - 7.3
-
+- 7.1
+- 7.2
+- 7.3
 before_install:
-  - pecl install ast
-
+- pecl install ast
 install:
-  - composer install
-
+- composer install
 script:
-  - composer validate --strict
-  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml --configuration phpunit.xml.dist
-  - php vendor/bin/security-checker security:check composer.lock
-  - vendor/bin/phpcs
-  - vendor/bin/phpmnd src
-  - vendor/bin/phpmd src,tests text phpmd.xml.dist --suffixes php
-  - vendor/bin/phpcpd --names=*.php --fuzzy src tests
-  - vendor/bin/phpstan analyse
-
+- composer validate --strict
+- vendor/bin/phpunit --coverage-clover build/logs/clover.xml --configuration phpunit.xml.dist
+- php vendor/bin/security-checker security:check composer.lock
+- vendor/bin/phpcs
+- vendor/bin/phpmnd src
+- vendor/bin/phpmd src,tests text phpmd.xml.dist --suffixes php
+- vendor/bin/phpcpd --names=*.php --fuzzy src tests
+- vendor/bin/phpstan analyse
 after_success: travis_retry vendor/bin/php-coveralls -v
+env:
+  global:
+    secure: L2cqxrqiLjdfaSIIRDCt4MslwlVLG2kLUJ+bqYYF/SpI3/eIK3YJSNRh4F8XQ/dXUSMZVEYVXPmAYUJjgya0nI0Vt5y9WXBZBJxSWSIJN8VkRWHKjGilBsBZsW4blJcunLmlJOmpvGmy5GQCABwEXCQfWws7HVfH/F7bI/4HtAbsmgqgMerBVw8mJOWd22w77T0VNPP1rjUQf/jCQlDyD6kdygz8BjM0G8ZWfVhqwuAeZy1BR5N/RDM87XAjEKE1CU1x7ufCTDd6uMXg24NzCQN2Y16RAKradFkgzj6GEVplcbFnsfeTWXGYg66gARUpUs++Ak0b4gzXoA1uICpD2g9eOAnjjgX5FXyD25ErK1F5lToOTXxpgLy9axI4b976XYc1jwhoKAyZ2dUGiujSkt60KDawueiO/5g+NtSlVgP5LKSeJzjil6wKdlXcuQ8fIzjN80sbgQQDwrBhZLa8EFODd0aK01rhMc60W790I1MDTLCnKmANCl7NPdGY8DbucqZ6pYLA+pTtaZVk8EWR9ZdcE3qq7b0Bx2PsKstyD2ufJ0HgH2O0AdC8BzhMUH+CXkilvCCRVbQTSnhAcGUb78ZybM9XY1SPQZ5F3ZT4j1rJKRGis9bKHYKkZrFobBvbrlWOINbDGQey9ZqLV99Oe9w3zw50L9dI7GX3XjQjX/8=

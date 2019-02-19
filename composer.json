@@ -20,6 +20,7 @@
     },
     "require-dev": {
         "ext-ast": "*",
+        "infection/infection": "^0.12.2",
         "neronmoon/scriptsdev": "^0.1.4",
         "php-coveralls/php-coveralls": "^2.1",
         "phpmd/phpmd": "^2.6",
@@ -47,6 +48,7 @@
             "validate-composer": "@composer validate --strict",
             "security-check": "@php vendor/bin/security-checker security:check composer.lock",
             "tests": "vendor/bin/phpunit",
+            "mutation": "vendor/bin/infection --threads=4",
             "phpcs": "vendor/bin/phpcs",
             "phpmnd": "vendor/bin/phpmnd src",
             "phpmd": "vendor/bin/phpmd src,tests text phpmd.xml.dist --suffixes php",
@@ -56,6 +58,7 @@
                 "@validate-composer",
                 "@security-check",
                 "@tests",
+                "@mutation",
                 "@phpcs",
                 "@phpmnd",
                 "@phpmd",

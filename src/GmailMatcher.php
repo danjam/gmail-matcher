@@ -86,6 +86,21 @@ class GmailMatcher
     }
 
     /**
+     * Gets the first invalid email address, for use in exceptions
+     *
+     * @param array $emails
+     * @param array $validatedEmails
+     *
+     * @return string
+     */
+    private function getFirstInvalidEmail(array $emails, array $validatedEmails): string
+    {
+        $invalidEmails = array_values(array_diff($emails, $validatedEmails));
+
+        return reset($invalidEmails);
+    }
+
+    /**
      * Naively Validates an email address. Checks for empty address / invalid address / non Gmail address.
      *
      * @param string ...$emails
@@ -106,7 +121,7 @@ class GmailMatcher
         // invalid email address
         if ($validatedEmails !== $emails) {
             throw new InvalidEmailException(
-                array_values(array_diff($emails, $validatedEmails))[0] . self::ERROR_INVALID_EMAIL
+                $this->getFirstInvalidEmail($emails, $validatedEmails) . self::ERROR_INVALID_EMAIL
             );
         }
 
@@ -115,7 +130,7 @@ class GmailMatcher
         // invalid gmail address
         if ($matches !== $emails) {
             throw new InvalidEmailException(
-                array_values(array_diff($emails, $matches))[0] . self::ERROR_INVALID_GMAIL
+                $this->getFirstInvalidEmail($emails, $matches) . self::ERROR_INVALID_GMAIL
             );
         }
     }

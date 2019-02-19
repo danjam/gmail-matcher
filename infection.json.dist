@@ -1,0 +1,19 @@
+{
+    "timeout": 10,
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "test_reports/infection/infection.log",
+        "summary": "test_reports/infection/summary.log",
+        "perMutator": "test_reports/infection/per-mutator.md",
+        "badge": {
+            "branch": "master"
+        }
+    },
+    "mutators": {
+        "@default": true
+    }
+}
