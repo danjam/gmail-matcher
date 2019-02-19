@@ -11,6 +11,7 @@ install:
 script:
 - composer validate --strict
 - vendor/bin/phpunit --coverage-clover build/logs/clover.xml --configuration phpunit.xml.dist
+- vendor/bin/infection --threads=4
 - php vendor/bin/security-checker security:check composer.lock
 - vendor/bin/phpcs
 - vendor/bin/phpmnd src
