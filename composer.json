@@ -45,10 +45,11 @@
     },
     "extra": {
         "scripts-dev": {
+            "clear-build": "rm -rf build",
             "validate-composer": "@composer validate --strict",
             "security-check": "@php vendor/bin/security-checker security:check composer.lock",
             "tests": "vendor/bin/phpunit",
-            "tests-qa": "vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-clover build/logs/clover.xml --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml",
+            "tests-qa": "vendor/bin/phpunit --configuration=phpunit.xml.dist --coverage-clover=build/logs/clover.xml --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml",
             "mutation": "vendor/bin/infection -j$(nproc)",
             "mutation-qa": "vendor/bin/infection -j$(nproc) --coverage=build/coverage",
             "phpcs": "vendor/bin/phpcs",
@@ -57,6 +58,7 @@
             "phpcpd": "vendor/bin/phpcpd --names=*.php --fuzzy src tests",
             "phpstan": "vendor/bin/phpstan analyse",
             "qa": [
+                "@clear-build",
                 "@validate-composer",
                 "@security-check",
                 "@tests-qa",

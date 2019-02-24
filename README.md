@@ -1,6 +1,6 @@
 # gmail-matcher
 
-[![Build Status](https://travis-ci.org/danjam/gmail-matcher.svg?branch=master)](https://travis-ci.org/danjam/gmail-matcher) [![Coverage Status](https://coveralls.io/repos/github/danjam/gmail-matcher/badge.svg?branch=master)](https://coveralls.io/github/danjam/gmail-matcher?branch=master) [![Infection MSI](https://badge.stryker-mutator.io/github.com/danjam/gmail-matcher/master)](https://infection.github.io)
+[![Latest Stable Version](https://poser.pugx.org/danjam/gmail-matcher/v/stable)](https://packagist.org/packages/danjam/gmail-matcher) [![Build Status](https://travis-ci.org/danjam/gmail-matcher.svg?branch=master)](https://travis-ci.org/danjam/gmail-matcher) [![Coverage Status](https://coveralls.io/repos/github/danjam/gmail-matcher/badge.svg?branch=master)](https://coveralls.io/github/danjam/gmail-matcher?branch=master) [![Infection MSI](https://badge.stryker-mutator.io/github.com/danjam/gmail-matcher/master)](https://infection.github.io)
 
 **TL;DR: This is a PHP 7.1+ class that can normalize and compare different formats of the same Gmail address.**
 
