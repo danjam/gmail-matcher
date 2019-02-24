@@ -80,7 +80,7 @@ class GmailMatcher
      *
      * @return string
      */
-    private function normalizedDomainsRegexString(): string
+    private function gmailValidationRegex(): string
     {
         return '/@(' . str_replace('.', '\.', implode('|', self::VALID_NORMALIZED_DOMAINS)) . ')$/i';
     }
@@ -125,7 +125,7 @@ class GmailMatcher
             );
         }
 
-        $matches = preg_grep($this->normalizedDomainsRegexString(), $emails);
+        $matches = preg_grep($this->gmailValidationRegex(), $emails);
 
         // invalid gmail address
         if ($matches !== $emails) {
@@ -184,6 +184,6 @@ class GmailMatcher
      */
     public function isGmailAddress(string $email): bool
     {
-        return (bool) preg_match($this->normalizedDomainsRegexString(), $email);
+        return (bool) preg_match($this->gmailValidationRegex(), $email);
     }
 }
