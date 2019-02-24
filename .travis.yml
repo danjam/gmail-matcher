@@ -10,9 +10,9 @@ install:
 - composer install
 script:
 - composer validate --strict
-- vendor/bin/phpunit --coverage-clover build/logs/clover.xml --configuration phpunit.xml.dist
-- vendor/bin/infection --threads=4
 - php vendor/bin/security-checker security:check composer.lock
+- vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-clover build/logs/clover.xml --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml
+- vendor/bin/infection -j$(nproc) --coverage=build/coverage
 - vendor/bin/phpcs
 - vendor/bin/phpmnd src
 - vendor/bin/phpmd src,tests text phpmd.xml.dist --suffixes php

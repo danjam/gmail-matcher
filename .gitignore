@@ -1,5 +1,5 @@
 .idea
 vendor
 composer.lock
-test_reports/*
+build/*
 

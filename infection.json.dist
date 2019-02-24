@@ -6,9 +6,9 @@
         ]
     },
     "logs": {
-        "text": "test_reports/infection/infection.log",
-        "summary": "test_reports/infection/summary.log",
-        "perMutator": "test_reports/infection/per-mutator.md",
+        "text": "build/infection/infection.log",
+        "summary": "build/infection/summary.log",
+        "perMutator": "build/infection/per-mutator.md",
         "badge": {
             "branch": "master"
         }
